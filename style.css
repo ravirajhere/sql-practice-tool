@@ -1,0 +1,399 @@
+/* ============================================
+   SQL Practice Tool — Styles
+   Dark theme, mobile-first
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: #0a0f1c;
+  color: #e2e8f0;
+  line-height: 1.6;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- Header ---------- */
+.header {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.header h1 {
+  font-size: 26px;
+  margin-bottom: 6px;
+  color: #f1f5f9;
+}
+
+.subtitle {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* ---------- Progress ---------- */
+.progress {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+#progressText {
+  font-size: 13px;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #1e293b;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 10%;
+  background: #3b82f6;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* ---------- Question Panel ---------- */
+.question-panel {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-left: 3px solid #3b82f6;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.label {
+  font-size: 11px;
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+}
+
+#questionText {
+  font-size: 16px;
+  color: #f1f5f9;
+  line-height: 1.6;
+}
+
+.hint-box {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #1e293b;
+}
+
+.hint-box summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: #94a3b8;
+  list-style: none;
+  user-select: none;
+}
+
+.hint-box summary::-webkit-details-marker {
+  display: none;
+}
+
+.hint-box summary:hover {
+  color: #3b82f6;
+}
+
+.hint-box p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #cbd5e1;
+  padding: 10px;
+  background: #0a0f1c;
+  border-radius: 6px;
+  border-left: 2px solid #f59e0b;
+}
+
+/* ---------- Input Panel ---------- */
+.input-panel {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.input-panel label {
+  display: block;
+  font-size: 13px;
+  color: #94a3b8;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+#sqlInput {
+  width: 100%;
+  min-height: 100px;
+  padding: 14px;
+  background: #0a0f1c;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#sqlInput:focus {
+  border-color: #3b82f6;
+}
+
+#sqlInput::placeholder {
+  color: #475569;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn.primary {
+  background: #3b82f6;
+  color: white;
+  flex: 1;
+}
+
+.btn.primary:hover {
+  background: #2563eb;
+}
+
+.btn.secondary {
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid #334155;
+}
+
+.btn.secondary:hover {
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+.btn.next {
+  width: 100%;
+  background: #16a34a;
+  color: white;
+  padding: 14px;
+  font-size: 15px;
+}
+
+.btn.next:hover:not(:disabled) {
+  background: #15803d;
+}
+
+.btn.next:disabled {
+  background: #1e293b;
+  color: #475569;
+  cursor: not-allowed;
+}
+
+/* ---------- Result Panel ---------- */
+.result-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: none;
+}
+
+.message.success {
+  display: block;
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid #16a34a;
+  color: #4ade80;
+}
+
+.message.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #f87171;
+}
+
+.result-table {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.result-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.result-table th {
+  background: #1e293b;
+  color: #f1f5f9;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.result-table td {
+  padding: 12px;
+  border-top: 1px solid #1e293b;
+  color: #cbd5e1;
+  white-space: nowrap;
+}
+
+.result-table tr:hover td {
+  background: #0a0f1c;
+}
+
+/* ---------- Navigation ---------- */
+.nav-panel {
+  margin-top: 4px;
+}
+
+/* ---------- Schema Box ---------- */
+.schema-box {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+
+.schema-box summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: #94a3b8;
+  list-style: none;
+  user-select: none;
+}
+
+.schema-box summary::-webkit-details-marker {
+  display: none;
+}
+
+.schema-box summary:hover {
+  color: #3b82f6;
+}
+
+.schema-content {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #1e293b;
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.schema-content strong {
+  color: #f1f5f9;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.schema-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.schema-content li {
+  padding: 6px 0;
+  color: #94a3b8;
+}
+
+.schema-content code {
+  background: #0a0f1c;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #3b82f6;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+}
+
+/* ============================================
+   Mobile (max-width: 640px)
+   ============================================ */
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+  }
+
+  .container {
+    gap: 14px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .header {
+    padding: 10px 0;
+  }
+
+  .question-panel,
+  .input-panel,
+  .schema-box {
+    padding: 16px;
+  }
+
+  #questionText {
+    font-size: 15px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn.primary {
+    width: 100%;
+  }
+
+  .result-table th,
+  .result-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+}
