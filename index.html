@@ -3,7 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQL Practice Tool</title>
+  <title>SQL Practice Tool — Practice SQL in Your Browser</title>
+  <meta name="description" content="Practice SQL queries in your browser with 30 questions across 5 categories. Real SQLite via WebAssembly. No setup, no backend.">
+  <meta name="author" content="Ravi Raj">
+  <meta name="theme-color" content="#0a0f1c">
+  <link rel="canonical" href="https://rj-sql-practice-tool.vercel.app/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SQL Practice Tool — Practice SQL in Your Browser">
+  <meta property="og:description" content="30 questions, 5 categories, real SQLite via WebAssembly. Free-play mode. 100% client-side.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rj-sql-practice-tool.vercel.app/">
+  <meta property="og:locale" content="en_IN">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SQL Practice Tool">
+  <meta name="twitter:description" content="Practice SQL in your browser. 30 questions, real SQLite via WebAssembly.">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,70 +30,189 @@
     <!-- Header -->
     <header class="header">
       <h1>🗄️ SQL Practice Tool</h1>
-      <p class="subtitle">Practice SQL queries in your browser</p>
+      <p class="subtitle">Practice SQL queries in your browser · v2.0</p>
     </header>
 
-    <!-- Progress -->
+    <!-- Mode Toggle -->
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-mode="practice">📝 Practice</button>
+      <button class="mode-btn" data-mode="freeplay">🎮 Free Play</button>
+    </div>
+
+    <!-- Progress (common) -->
     <div class="progress">
-      <span id="progressText">Question 1 of 10</span>
+      <span id="progressText">Question 1 of 30</span>
       <div class="progress-bar">
         <div id="progressFill" class="progress-fill"></div>
       </div>
     </div>
 
-    <!-- Question Panel -->
-    <section class="question-panel">
-      <span class="label">Question</span>
-      <p id="questionText">Loading question...</p>
-      <details class="hint-box">
-        <summary>💡 Show hint</summary>
-        <p id="hintText">Hint will appear here</p>
-      </details>
-    </section>
+    <!-- ============ PRACTICE MODE ============ -->
+    <section id="practiceSection">
 
-    <!-- SQL Input -->
-    <section class="input-panel">
-      <label for="sqlInput">Your SQL Query</label>
-      <textarea 
-        id="sqlInput" 
-        placeholder="SELECT * FROM students WHERE marks > 80;"
-        spellcheck="false"
-        autocomplete="off"
-      ></textarea>
-      <div class="actions">
-        <button id="runBtn" class="btn primary">▶ Run Query</button>
-        <button id="clearBtn" class="btn secondary">Clear</button>
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-label">Streak</span>
+          <span class="stat-value" id="streakValue">0 🔥</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Solved</span>
+          <span class="stat-value" id="solvedValue">0 / 30</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Best Streak</span>
+          <span class="stat-value" id="bestStreakValue">0</span>
+        </div>
       </div>
+
+      <!-- Category Filter -->
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-category="All">All</button>
+        <button class="filter-btn" data-category="SELECT">SELECT</button>
+        <button class="filter-btn" data-category="AGGREGATE">AGGREGATE</button>
+        <button class="filter-btn" data-category="GROUP BY">GROUP BY</button>
+        <button class="filter-btn" data-category="JOIN">JOIN</button>
+        <button class="filter-btn" data-category="SUBQUERY">SUBQUERY</button>
+      </div>
+
+      <!-- Question Panel -->
+      <section class="question-panel">
+        <span class="label">Question</span>
+        <p id="questionText">Loading question...</p>
+
+        <details class="hint-box">
+          <summary>💡 Show hint</summary>
+          <p id="hintText">Hint will appear here</p>
+        </details>
+
+        <!-- Explanation Box (Phase 3) -->
+        <div class="explanation-box" id="explanationBox" style="display: none;">
+          <span class="label">💡 Why this works</span>
+          <p id="explanationText"></p>
+        </div>
+      </section>
+
+      <!-- SQL Input -->
+      <section class="input-panel">
+        <label for="sqlInput">Your SQL Query</label>
+        <textarea
+          id="sqlInput"
+          placeholder="SELECT * FROM students WHERE marks > 80;"
+          spellcheck="false"
+          autocomplete="off"
+        ></textarea>
+        <div class="actions">
+          <button id="runBtn" class="btn primary">▶ Run Query</button>
+          <button id="clearBtn" class="btn secondary">Clear</button>
+        </div>
+      </section>
+
+      <!-- Result -->
+      <section class="result-panel">
+        <div id="message" class="message"></div>
+        <div id="resultTable" class="result-table"></div>
+      </section>
+
+      <!-- Navigation -->
+      <section class="nav-panel">
+        <button id="nextBtn" class="btn next" disabled>Next Question →</button>
+        <button id="shareBtn" class="btn share" style="display: none;">Share Progress 📤</button>
+      </section>
+
     </section>
 
-    <!-- Result / Message -->
-    <section class="result-panel">
-      <div id="message" class="message"></div>
-      <div id="resultTable" class="result-table"></div>
+    <!-- ============ FREE PLAY MODE ============ -->
+    <section class="freeplay-section" id="freeplaySection" style="display: none;">
+
+      <div class="question-panel">
+        <span class="label">🎮 Free Play Mode</span>
+        <p>Run any SQL query on the database. No questions, no checking — just explore.</p>
+      </div>
+
+      <div class="input-panel">
+        <label for="freeplayInput">Your SQL Query</label>
+        <textarea
+          id="freeplayInput"
+          placeholder="SELECT * FROM students;"
+          spellcheck="false"
+          autocomplete="off"
+        ></textarea>
+        <div class="actions">
+          <button id="freeplayRunBtn" class="btn primary">▶ Run Query</button>
+          <button id="freeplayClearBtn" class="btn secondary">Clear</button>
+        </div>
+      </div>
+
+      <div class="result-panel">
+        <div id="freeplayMessage" class="message"></div>
+        <div id="freeplayResultTable" class="result-table"></div>
+      </div>
+
+      <details class="schema-box">
+        <summary>📋 Database Schema</summary>
+        <div class="schema-content">
+          <p><strong>Table: students (20 rows)</strong></p>
+          <ul>
+            <li><code>id</code> — INTEGER (primary key)</li>
+            <li><code>name</code> — TEXT</li>
+            <li><code>marks</code> — INTEGER</li>
+            <li><code>city</code> — TEXT</li>
+          </ul>
+          <p style="margin-top: 12px;"><strong>Table: courses (22 rows)</strong></p>
+          <ul>
+            <li><code>id</code> — INTEGER (primary key)</li>
+            <li><code>student_id</code> — INTEGER (FK to students.id)</li>
+            <li><code>course_name</code> — TEXT</li>
+            <li><code>score</code> — INTEGER</li>
+          </ul>
+        </div>
+      </details>
+
     </section>
 
-    <!-- Navigation -->
-    <section class="nav-panel">
-      <button id="nextBtn" class="btn next" disabled>Next Question →</button>
-    </section>
-
-    <!-- Schema Reference -->
-    <details class="schema-box">
+    <!-- Schema Reference (practice mode) -->
+    <details class="schema-box" id="practiceSchema">
       <summary>📋 Database Schema</summary>
       <div class="schema-content">
-        <p><strong>Table: students</strong></p>
+        <p><strong>Table: students (20 rows)</strong></p>
         <ul>
           <li><code>id</code> — INTEGER (primary key)</li>
           <li><code>name</code> — TEXT</li>
           <li><code>marks</code> — INTEGER</li>
           <li><code>city</code> — TEXT</li>
         </ul>
+        <p style="margin-top: 12px;"><strong>Table: courses (22 rows)</strong></p>
+        <ul>
+          <li><code>id</code> — INTEGER (primary key)</li>
+          <li><code>student_id</code> — INTEGER (FK to students.id)</li>
+          <li><code>course_name</code> — TEXT</li>
+          <li><code>score</code> — INTEGER</li>
+        </ul>
       </div>
     </details>
 
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>SQL Practice Tool</strong>
+          <span class="footer-version">v2.0</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/ravirajhere/sql-practice-tool" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://ravirajhere-portfolio.vercel.app" target="_blank" rel="noopener noreferrer">Portfolio</a>
+          <a href="mailto:raviraj2k09@gmail.com">Feedback</a>
+        </div>
+      </div>
+      <p class="footer-note">
+        © 2026 Ravi Raj · Made with ❤️ &amp; Curiosity
+      </p>
+    </footer>
+
   </div>
 
-  <!-- sql.js library from CDN -->
+  <!-- sql.js from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
   <script src="script.js"></script>
 
