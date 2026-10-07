@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Practice Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Header -->
+    <header class="header">
+      <h1>🗄️ SQL Practice Tool</h1>
+      <p class="subtitle">Practice SQL queries in your browser</p>
+    </header>
+
+    <!-- Progress -->
+    <div class="progress">
+      <span id="progressText">Question 1 of 10</span>
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- Question Panel -->
+    <section class="question-panel">
+      <span class="label">Question</span>
+      <p id="questionText">Loading question...</p>
+      <details class="hint-box">
+        <summary>💡 Show hint</summary>
+        <p id="hintText">Hint will appear here</p>
+      </details>
+    </section>
+
+    <!-- SQL Input -->
+    <section class="input-panel">
+      <label for="sqlInput">Your SQL Query</label>
+      <textarea 
+        id="sqlInput" 
+        placeholder="SELECT * FROM students WHERE marks > 80;"
+        spellcheck="false"
+        autocomplete="off"
+      ></textarea>
+      <div class="actions">
+        <button id="runBtn" class="btn primary">▶ Run Query</button>
+        <button id="clearBtn" class="btn secondary">Clear</button>
+      </div>
+    </section>
+
+    <!-- Result / Message -->
+    <section class="result-panel">
+      <div id="message" class="message"></div>
+      <div id="resultTable" class="result-table"></div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="nav-panel">
+      <button id="nextBtn" class="btn next" disabled>Next Question →</button>
+    </section>
+
+    <!-- Schema Reference -->
+    <details class="schema-box">
+      <summary>📋 Database Schema</summary>
+      <div class="schema-content">
+        <p><strong>Table: students</strong></p>
+        <ul>
+          <li><code>id</code> — INTEGER (primary key)</li>
+          <li><code>name</code> — TEXT</li>
+          <li><code>marks</code> — INTEGER</li>
+          <li><code>city</code> — TEXT</li>
+        </ul>
+      </div>
+    </details>
+
+  </div>
+
+  <!-- sql.js library from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
