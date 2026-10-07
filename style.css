@@ -1,5 +1,6 @@
 /* ============================================
    SQL Practice Tool — Styles
+   Phase 4 Final: All features
    Dark theme, mobile-first
    ============================================ */
 
@@ -43,6 +44,39 @@ body {
   font-size: 14px;
 }
 
+/* ---------- Mode Toggle ---------- */
+.mode-toggle {
+  display: flex;
+  gap: 8px;
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mode-btn:hover {
+  color: #e2e8f0;
+}
+
+.mode-btn.active {
+  background: #3b82f6;
+  color: white;
+}
+
 /* ---------- Progress ---------- */
 .progress {
   background: #111827;
@@ -67,10 +101,79 @@ body {
 
 .progress-fill {
   height: 100%;
-  width: 10%;
+  width: 3.33%;
   background: #3b82f6;
   border-radius: 3px;
   transition: width 0.3s ease;
+}
+
+/* ---------- Stats Bar ---------- */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.stat {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+}
+
+.stat-label {
+  display: block;
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+/* ---------- Filter Bar ---------- */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-btn {
+  padding: 8px 14px;
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 20px;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+.filter-btn.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
 }
 
 /* ---------- Question Panel ---------- */
@@ -98,6 +201,7 @@ body {
   line-height: 1.6;
 }
 
+/* ---------- Hint Box ---------- */
 .hint-box {
   margin-top: 16px;
   padding-top: 16px;
@@ -130,6 +234,40 @@ body {
   border-left: 2px solid #f59e0b;
 }
 
+/* ---------- Explanation Box ---------- */
+.explanation-box {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-left: 3px solid #3b82f6;
+  border-radius: 8px;
+  animation: fadeIn 0.3s ease;
+}
+
+.explanation-box .label {
+  color: #3b82f6;
+  font-size: 11px;
+  margin-bottom: 8px;
+}
+
+.explanation-box p {
+  font-size: 14px;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ---------- Input Panel ---------- */
 .input-panel {
   background: #111827;
@@ -146,7 +284,8 @@ body {
   font-weight: 500;
 }
 
-#sqlInput {
+#sqlInput,
+#freeplayInput {
   width: 100%;
   min-height: 100px;
   padding: 14px;
@@ -162,11 +301,13 @@ body {
   transition: border-color 0.2s;
 }
 
-#sqlInput:focus {
+#sqlInput:focus,
+#freeplayInput:focus {
   border-color: #3b82f6;
 }
 
-#sqlInput::placeholder {
+#sqlInput::placeholder,
+#freeplayInput::placeholder {
   color: #475569;
 }
 
@@ -227,6 +368,17 @@ body {
   cursor: not-allowed;
 }
 
+.btn.share {
+  width: 100%;
+  background: #8b5cf6;
+  color: white;
+  margin-top: 10px;
+}
+
+.btn.share:hover {
+  background: #7c3aed;
+}
+
 /* ---------- Result Panel ---------- */
 .result-panel {
   display: flex;
@@ -262,6 +414,10 @@ body {
   overflow-x: auto;
 }
 
+.result-table:empty {
+  display: none;
+}
+
 .result-table table {
   width: 100%;
   border-collapse: collapse;
@@ -293,7 +449,17 @@ body {
 
 /* ---------- Navigation ---------- */
 .nav-panel {
+  display: flex;
+  flex-direction: column;
   margin-top: 4px;
+}
+
+/* ---------- Free Play Section ---------- */
+.freeplay-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeIn 0.3s ease;
 }
 
 /* ---------- Schema Box ---------- */
@@ -353,6 +519,65 @@ body {
   font-size: 13px;
 }
 
+/* ---------- Footer ---------- */
+.site-footer {
+  margin-top: 20px;
+  padding-top: 24px;
+  border-top: 1px solid #1e293b;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.footer-brand strong {
+  font-size: 14px;
+  color: #f1f5f9;
+}
+
+.footer-version {
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #3b82f6;
+}
+
+.footer-note {
+  font-size: 12px;
+  color: #475569;
+  text-align: center;
+  padding-top: 4px;
+}
+
 /* ============================================
    Mobile (max-width: 640px)
    ============================================ */
@@ -373,6 +598,11 @@ body {
     padding: 10px 0;
   }
 
+  .mode-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
   .question-panel,
   .input-panel,
   .schema-box {
@@ -381,6 +611,22 @@ body {
 
   #questionText {
     font-size: 15px;
+  }
+
+  .stats-bar {
+    gap: 8px;
+  }
+
+  .stat {
+    padding: 10px 6px;
+  }
+
+  .stat-value {
+    font-size: 15px;
+  }
+
+  .stat-label {
+    font-size: 9px;
   }
 
   .actions {
@@ -395,5 +641,22 @@ body {
   .result-table td {
     padding: 10px;
     font-size: 13px;
+  }
+
+  .explanation-box {
+    padding: 12px;
+  }
+
+  .explanation-box p {
+    font-size: 13px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
   }
 }
